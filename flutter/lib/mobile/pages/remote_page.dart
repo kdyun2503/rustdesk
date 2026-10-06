@@ -143,6 +143,11 @@ class _RemotePageState extends State<RemotePage> with WidgetsBindingObserver {
   @override
   Future<void> dispose() async {
     WidgetsBinding.instance.removeObserver(this);
+    // [IME test A] Stop soft-keyboard callbacks first. Otherwise a late
+    // `onSoftKeyboardChanged` can fire while the awaits below are still pending
+    // and race with the SystemChrome / `enable_soft_keyboard` calls made here.
+    // `cancel()` stops event delivery synchronously, so it need not be awaited.
+    unawaited(keyboardSubscription.cancel());
     // Close the session up-front. `gFFI.close()` below only calls `sessionClose`
     // after several awaits (canvas save, image update, the `enable_soft_keyboard`
     // platform call), so if the app is backgrounded while this page is disposing,
@@ -170,7 +175,6 @@ class _RemotePageState extends State<RemotePage> with WidgetsBindingObserver {
     await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: SystemUiOverlay.values);
     WakelockManager.disable(_uniqueKey);
-    await keyboardSubscription.cancel();
     removeSharedStates(widget.id);
     // `on_voice_call_closed` should be called when the connection is ended.
     // The inner logic of `on_voice_call_closed` will check if the voice call is active.
