@@ -1,4 +1,4 @@
-name: IME Test Android arm64
+name: IME Test Android arm64 B
 
 # Minimal Android-arm64-only build of the official RustDesk 1.4.9 Android job.
 # Steps, tool versions and scripts are copied unchanged from
@@ -263,7 +263,7 @@ jobs:
       - name: Upload TEST APK artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: rustdesk-ime-test-a-aarch64
+          name: rustdesk-ime-test-b-aarch64
           path: |
             signed-apk/rustdesk-${{ env.VERSION }}-aarch64.apk
             signed-apk/build-info.txt

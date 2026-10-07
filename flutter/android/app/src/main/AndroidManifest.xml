@@ -25,7 +25,7 @@
     <application
         android:name=".MainApplication"
         android:icon="@mipmap/ic_launcher"
-        android:label="RustDesk TEST-IME-FIX-A2"
+        android:label="RustDesk TEST-IME-FIX-B"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true">
